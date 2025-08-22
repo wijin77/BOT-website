@@ -1,0 +1,186 @@
+/* 기본 스타일 초기화 및 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 헤더 및 내비게이션 바 스타일 */
+.navbar {
+    background-color: #ffffff;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* 메인 콘텐츠 영역 */
+main {
+    padding-top: 70px; /* 고정 헤더 높이만큼 여백 */
+}
+
+/* 섹션 공통 스타일 */
+section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* 히어로(첫 화면) 섹션 */
+#hero {
+    background: linear-gradient(rgba(0, 123, 255, 0.7), rgba(0, 123, 255, 0.7)), url('https://via.placeholder.com/1500x800.png?text=Refreshing+Background') no-repeat center center/cover;
+    color: #fff;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+#hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* 버튼 스타일 */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #fff;
+    color: #007bff;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: #fff;
+}
+
+
+/* 제품 소개 섹션 */
+#product .product-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+#product .product-image {
+    flex: 1;
+    max-width: 400px;
+    height: 400px; /* 임시 높이 */
+    background-color: #e9ecef; /* 이미지 없을 때 배경색 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+
+#product .product-details {
+    flex: 1;
+    max-width: 500px;
+}
+
+#product h3 {
+    font-size: 2rem;
+}
+
+#product .price {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#product .description {
+    margin-bottom: 20px;
+}
+
+/* 브랜드 소개 섹션 */
+#about {
+    background-color: #e9ecef;
+}
+
+/* 푸터 */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
