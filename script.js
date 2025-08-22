@@ -1,22 +1,31 @@
-// 나중에 웹사이트에 동적인 기능을 추가할 때 이 파일에 코드를 작성합니다.
-
 document.addEventListener('DOMContentLoaded', function() {
-    // '구매하기' 버튼 클릭 시 알림 창 띄우기 (임시 기능)
+    // '구매하기' 버튼 요소를 찾습니다.
     const purchaseButton = document.querySelector('.btn-primary');
-    
+
     if (purchaseButton) {
         purchaseButton.addEventListener('click', function() {
-            alert('구매 기능은 현재 준비 중입니다!');
-            // 나중에 실제 구매 페이지 URL로 이동하는 코드를 여기에 추가할 수 있습니다.
-            // window.location.href = '결제페이지_주소';
+            // Firestore에 데이터 추가하기
+            db.collection("purchases").add({
+                productName: "간단하게 잠깨려면 BOT 마스크패치",
+                purchaseTime: new Date() // 현재 시간을 저장
+            })
+            .then((docRef) => {
+                // 성공했을 때
+                console.log("데이터가 성공적으로 저장되었습니다. ID: ", docRef.id);
+                alert('구매해주셔서 감사합니다! 주문 정보가 저장되었습니다.');
+            })
+            .catch((error) => {
+                // 실패했을 때
+                console.error("데이터 저장 중 오류 발생: ", error);
+                alert('죄송합니다. 주문 처리 중 오류가 발생했습니다.');
+            });
         });
     }
 
-    // 부드러운 스크롤 기능
+    // 부드러운 스크롤 기능 (기존 기능 유지)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
