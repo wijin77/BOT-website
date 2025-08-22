@@ -66,5 +66,26 @@
     </footer>
 
     <script src="script.js"></script>
+  <!-- Firebase SDK (Software Development Kit) 추가 -->
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAZTyfnDTgozZBHDz0lkATvi2GxzZ_slxw",
+    authDomain: "bot-wesite.firebaseapp.com",
+    projectId: "bot-wesite",
+    storageBucket: "bot-wesite.firebasestorage.app",
+    messagingSenderId: "362902003287",
+    appId: "1:362902003287:web:996608dcfd0e726e9c4d12"
+  };
+
+  // Firebase 앱 초기화
+  firebase.initializeApp(firebaseConfig);
+  // Firestore 데이터베이스 사용 준비
+  const db = firebase.firestore(); 
+</script>
 </body>
+
 </html>
