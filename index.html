@@ -3,90 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOT - Best Oryang TMD</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Firebase 이메일 & Google 로그인</title>
+    <!-- Tailwind CSS CDN 추가 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) 추가 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-    <header>
-        <nav class="navbar">
-            <div class="container">
-                <a href="#" class="logo">BOT</a>
-                <ul class="nav-links">
-                    <li><a href="#product">제품 소개</a></li>
-                    <li><a href="#about">브랜드 소개</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="hero">
-            <div class="container">
-                <h1>마스크 속 상쾌함, BOT으로 깨우세요!</h1>
-                <p>Best Oryang TMD가 만든 혁신적인 마스크 패치를 만나보세요.</p>
-                <a href="#product" class="btn">자세히 보기</a>
-            </div>
-        </section>
-
-        <section id="product">
-            <div class="container">
-                <h2>제품 소개</h2>
-                <div class="product-layout">
-                    <div class="product-image">
-                        <img src="BOT-wbsite.png" alt="BOT 마스크 패치 제품 이미지">
-                        </div>
-                    <div class="product-details">
-                        <h3>간단하게 잠 깨려면 BOT 마스크패치</h3>
-                        <p class="price">₩3,000</p>
-                        <p class="description">
-                            답답한 마스크 속, 상쾌한 향기로 정신을 깨워주는 BOT 마스크패치입니다.
-                            언제 어디서든 간편하게 붙이기만 하면 리프레시 효과를 느낄 수 있습니다.
-                            장시간 마스크 착용으로 지쳤을 때, 공부나 업무 중 집중이 필요할 때 사용해보세요.
-                        </p>
-                        <button class="btn btn-primary">구매하기</button>
-                    </div>
+    <div class="w-full max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-lg">
+        
+        <!-- 로그인/회원가입 컨테이너 -->
+        <div id="auth-container">
+            <div id="login-view">
+                <h1 class="text-2xl font-bold text-gray-800 mb-2 text-center">로그인</h1>
+                <p class="text-gray-600 mb-6 text-center">계정에 로그인하세요.</p>
+                <div class="space-y-4">
+                    <input type="email" id="login-email" placeholder="이메일" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="login-password" placeholder="비밀번호" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
+                <p id="login-error" class="text-red-500 text-sm mt-2 text-left h-4"></p>
+                <button id="email-login-button" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4">
+                    이메일로 로그인
+                </button>
+                <div class="my-4 flex items-center">
+                    <hr class="w-full border-gray-300">
+                    <span class="px-2 text-gray-500 text-sm">또는</span>
+                    <hr class="w-full border-gray-300">
                 </div>
-        </section>
-
-        <section id="about">
-            <div class="container">
-                <h2>브랜드 'BOT' 이야기</h2>
-                <p>"Best Oryang TMD"의 약자인 BOT는 이름 그대로 '오량 TMD 중 최고'라는 자부심을 담고 있습니다. 우리는 사용자의 일상에 가장 필요한 혁신을 고민하며, 최고의 제품만을 선보일 것을 약속합니다.</p>
+                <button id="google-login-button" class="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-50 transition duration-300">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google 로고" class="w-6 h-6 mr-3"/>
+                    Google 계정으로 로그인
+                </button>
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    계정이 없으신가요? <a href="#" id="show-signup" class="font-semibold text-blue-500 hover:underline">회원가입</a>
+                </p>
             </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 BOT (Best Oryang TMD). All Rights Reserved.</p>
-            <p>이 웹사이트는 오픈소스 프로젝트입니다.</p>
+            <div id="signup-view" class="hidden">
+                 <h1 class="text-2xl font-bold text-gray-800 mb-2 text-center">회원가입</h1>
+                <p class="text-gray-600 mb-6 text-center">새 계정을 만드세요.</p>
+                <div class="space-y-4">
+                    <input type="email" id="signup-email" placeholder="이메일" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="signup-password" placeholder="비밀번호 (6자 이상)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <p id="signup-error" class="text-red-500 text-sm mt-2 text-left h-4"></p>
+                <button id="email-signup-button" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4">
+                    계정 만들기
+                </button>
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    이미 계정이 있으신가요? <a href="#" id="show-login" class="font-semibold text-blue-500 hover:underline">로그인</a>
+                </p>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
-  <!-- Firebase SDK (Software Development Kit) 추가 -->
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDK 추가 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            GoogleAuthProvider, 
+            signInWithPopup,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-<script>
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAZTyfnDTgozZBHDz0lkATvi2GxzZ_slxw",
-    authDomain: "bot-wesite.firebaseapp.com",
-    projectId: "bot-wesite",
-    storageBucket: "bot-wesite.firebasestorage.app",
-    messagingSenderId: "362902003287",
-    appId: "1:362902003287:web:996608dcfd0e726e9c4d12"
-  };
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-  // Firebase 앱 초기화
-  firebase.initializeApp(firebaseConfig);
-  // Firestore 데이터베이스 사용 준비
-  const db = firebase.firestore(); 
-</script>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        const authContainer = document.getElementById('auth-container');
+        const loginView = document.getElementById('login-view');
+        const signupView = document.getElementById('signup-view');
+        const showSignup = document.getElementById('show-signup');
+        const showLogin = document.getElementById('show-login');
+        
+        const loginEmailInput = document.getElementById('login-email');
+        const loginPasswordInput = document.getElementById('login-password');
+        const emailLoginButton = document.getElementById('email-login-button');
+        const loginError = document.getElementById('login-error');
+
+        const signupEmailInput = document.getElementById('signup-email');
+        const signupPasswordInput = document.getElementById('signup-password');
+        const emailSignupButton = document.getElementById('email-signup-button');
+        const signupError = document.getElementById('signup-error');
+
+        const googleLoginButton = document.getElementById('google-login-button');
+
+        showSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginView.classList.add('hidden');
+            signupView.classList.remove('hidden');
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+        });
+
+        emailSignupButton.addEventListener('click', () => {
+            const email = signupEmailInput.value;
+            const password = signupPasswordInput.value;
+            signupError.textContent = '';
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => console.log("회원가입 성공:", userCredential.user))
+                .catch((error) => signupError.textContent = getAuthErrorMessage(error.code));
+        });
+
+        emailLoginButton.addEventListener('click', () => {
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+            loginError.textContent = '';
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => console.log("로그인 성공:", userCredential.user))
+                .catch((error) => loginError.textContent = getAuthErrorMessage(error.code));
+        });
+
+        googleLoginButton.addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+                .then((result) => console.log("구글 로그인 성공:", result.user))
+                .catch((error) => loginError.textContent = "구글 로그인에 실패했습니다.");
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // 사용자가 로그인한 경우, main.html로 즉시 이동합니다.
+                window.location.href = './main.html';
+            }
+        });
+
+        function getAuthErrorMessage(errorCode) {
+            switch (errorCode) {
+                case 'auth/invalid-email': return '유효하지 않은 이메일 주소입니다.';
+                case 'auth/user-disabled': return '사용이 중지된 계정입니다.';
+                case 'auth/user-not-found': return '존재하지 않는 계정입니다.';
+                case 'auth/wrong-password': return '비밀번호가 올바르지 않습니다.';
+                case 'auth/email-already-in-use': return '이미 사용 중인 이메일 주소입니다.';
+                case 'auth/weak-password': return '비밀번호는 6자 이상이어야 합니다.';
+                default: return '로그인 또는 회원가입에 실패했습니다.';
+            }
+        }
+    </script>
 </body>
-
 </html>
-
