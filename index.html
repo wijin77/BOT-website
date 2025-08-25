@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase 로그인</title>
+    <title>BOT 마스크패치 시작하기</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,45 +11,13 @@
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <div id="auth-container">
-            <div id="login-view">
-                <h1 class="text-2xl font-bold text-gray-800 mb-2 text-center">로그인</h1>
-                <p class="text-gray-600 mb-6 text-center">계정에 로그인하세요.</p>
-                <div class="space-y-4">
-                    <input type="email" id="login-email" placeholder="이메일" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <input type="password" id="login-password" placeholder="비밀번호" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <p id="login-error" class="text-red-500 text-sm mt-2 text-left h-4"></p>
-                <button id="email-login-button" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4">이메일로 로그인</button>
-                <div class="my-4 flex items-center">
-                    <hr class="w-full border-gray-300">
-                    <span class="px-2 text-gray-500 text-sm">또는</span>
-                    <hr class="w-full border-gray-300">
-                </div>
-                <button id="google-login-button" class="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-50 transition duration-300">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google 로고" class="w-6 h-6 mr-3"/>
-                    Google 계정으로 로그인
-                </button>
-                <p class="text-center text-sm text-gray-600 mt-6">
-                    계정이 없으신가요? <a href="#" id="show-signup" class="font-semibold text-blue-500 hover:underline">회원가입</a>
-                </p>
-            </div>
-
-            <div id="signup-view" class="hidden">
-                <h1 class="text-2xl font-bold text-gray-800 mb-2 text-center">회원가입</h1>
-                <p class="text-gray-600 mb-6 text-center">새 계정을 만드세요.</p>
-                <div class="space-y-4">
-                    <input type="email" id="signup-email" placeholder="이메일" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <input type="password" id="signup-password" placeholder="비밀번호 (6자 이상)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <p id="signup-error" class="text-red-500 text-sm mt-2 text-left h-4"></p>
-                <button id="email-signup-button" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4">계정 만들기</button>
-                <p class="text-center text-sm text-gray-600 mt-6">
-                    이미 계정이 있으신가요? <a href="#" id="show-login" class="font-semibold text-blue-500 hover:underline">로그인</a>
-                </p>
-            </div>
-        </div>
+    
+    <div class="w-full max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-lg text-center">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">BOT 마스크패치</h1>
+        <p class="text-gray-600 mb-6">서비스를 이용하려면 아래 버튼을 누르세요.</p>
+        <button id="anonymous-login-button" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+            시작하기
+        </button>
     </div>
     
     <script src="script.js" type="module"></script>
