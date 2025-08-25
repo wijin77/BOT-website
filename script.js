@@ -1,6 +1,6 @@
 // 1. Firebase 서비스 모듈 가져오기 (CDN 방식)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { 
     getAuth, 
     onAuthStateChanged, 
@@ -18,7 +18,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyDORnc00mlGrymHB5PekOR1JkKmpggjzpM",
     authDomain: "eunha-9e617.firebaseapp.com",
     projectId: "eunha-9e617",
-    storageBucket: "eunha-9e617.firebasestorage.app",
+    storageBucket: "eunha-9e617.appspot.com", // 수정됨!
     messagingSenderId: "11922084914",
     appId: "1:11922084914:web:c397d89cab25f24e4b982b",
     measurementId: "G-QRLG97YGM6"
@@ -36,19 +36,30 @@ const googleProvider = new GoogleAuthProvider();
 // 4. 페이지 로드 완료 후 기능 실행 (이 부분은 이전과 동일합니다)
 // =================================================================
 document.addEventListener('DOMContentLoaded', () => {
-
-    // --- 페이지 공통: 인증 상태 감지 ---
-    onAuthStateChanged(auth, (user) => {
+    // --- 페이지 공통: 인증 상태 감지 및 사용자 정보 표시 ---
+    onAuthStateChanged(auth, async (user) => {
         const currentPath = window.location.pathname;
         if (user) {
             // 사용자가 로그인한 경우
             console.log("로그인 상태:", user.uid);
+
+            // main.html에서 사용자 정보 표시
+            if (document.getElementById('user-profile')) {
+                const userPhoto = document.getElementById('user-photo');
+                const userName = document.getElementById('user-name');
+                const userEmail = document.getElementById('user-email');
+                userPhoto.src = user.photoURL || 'https://placehold.co/96x96/E2E8F0/A0AEC0?text=User';
+                userName.textContent = user.displayName || '사용자';
+                userEmail.textContent = user.email;
+            }
+            // 로그인 페이지면 main으로 이동
             if (currentPath.includes("index.html") || currentPath === "/") {
                 window.location.href = 'main.html';
             }
         } else {
             // 사용자가 로그아웃한 경우
             console.log("로그아웃 상태");
+            // 메인 페이지면 로그인으로 이동
             if (currentPath.includes("main.html")) {
                 window.location.href = 'index.html';
             }
@@ -90,51 +101,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 이메일 회원가입
         emailSignupButton.addEventListener('click', () => {
-            const email = signupEmailInput.value;
-            const password = signupPasswordInput.value;
+            const email = signupEmailInput.value.trim();
+            const password = signupPasswordInput.value.trim();
             signupError.textContent = '';
-            createUserWithEmailAndPassword(auth, email, password).catch(err => signupError.textContent = getAuthErrorMessage(err.code));
+            if (!email) {
+                signupError.textContent = '이메일을 입력해주세요.';
+                return;
+            }
+            if (!password) {
+                signupError.textContent = '비밀번호를 입력해주세요.';
+                return;
+            }
+            createUserWithEmailAndPassword(auth, email, password)
+                .catch(err => signupError.textContent = getAuthErrorMessage(err.code));
         });
 
         // 이메일 로그인
         emailLoginButton.addEventListener('click', () => {
-            const email = loginEmailInput.value;
-            const password = loginPasswordInput.value;
+            const email = loginEmailInput.value.trim();
+            const password = loginPasswordInput.value.trim();
             loginError.textContent = '';
-            signInWithEmailAndPassword(auth, email, password).catch(err => loginError.textContent = getAuthErrorMessage(err.code));
+            if (!email) {
+                loginError.textContent = '이메일을 입력해주세요.';
+                return;
+            }
+            if (!password) {
+                loginError.textContent = '비밀번호를 입력해주세요.';
+                return;
+            }
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(err => loginError.textContent = getAuthErrorMessage(err.code));
         });
 
         // 구글 로그인
         googleLoginButton.addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider).catch(() => loginError.textContent = "구글 로그인에 실패했습니다.");
+            signInWithPopup(auth, googleProvider)
+                .catch(() => loginError.textContent = "구글 로그인에 실패했습니다.");
         });
     }
 
     // --- main.html (메인 페이지) 전용 로직 ---
     if (document.getElementById('user-profile')) {
-        const userPhoto = document.getElementById('user-photo');
-        const userName = document.getElementById('user-name');
-        const userEmail = document.getElementById('user-email');
         const logoutButton = document.getElementById('logout-button');
-        const purchaseButton = document.querySelector('.btn-primary');
-
-        // 사용자 정보 표시
-        const user = auth.currentUser;
-        if (user) {
-            userPhoto.src = user.photoURL || 'https://placehold.co/96x96/E2E8F0/A0AEC0?text=User';
-            userName.textContent = user.displayName || '사용자';
-            userEmail.textContent = user.email;
-        }
+        const purchaseButton = document.getElementById('purchase-button'); // id로 변경!
 
         // 로그아웃
         logoutButton.addEventListener('click', () => signOut(auth));
 
-        // 구매하기
-        purchaseButton.addEventListener('click', () => {
+        // 구매하기 (중복 구매 방지 간단 예시)
+        purchaseButton.addEventListener('click', async () => {
             const currentUser = auth.currentUser;
             if (!currentUser) return alert('로그인이 필요합니다.');
-            
-            addDoc(collection(db, "purchases"), {
+            // 구매 중복 확인
+            const purchasesRef = collection(db, "purchases");
+            const q = query(purchasesRef, 
+                where("userId", "==", currentUser.uid), 
+                where("productName", "==", "BOT 마스크패치 구매하기")
+            );
+            const snapshot = await getDocs(q);
+            if (!snapshot.empty) {
+                alert('이미 구매하셨습니다.');
+                return;
+            }
+            addDoc(purchasesRef, {
                 productName: "BOT 마스크패치 구매하기",
                 purchaseTime: serverTimestamp(),
                 userId: currentUser.uid,
