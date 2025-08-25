@@ -1,6 +1,6 @@
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    apiKey: "AIzaSyDORnc00mlGrymHB5PekOR1JkKmpggjzpM",
+    authDomain: "eunha-9e617.firebaseapp.com"
     // ... 나머지 설정 값들
 };
 firebase.initializeApp(firebaseConfig);
@@ -29,3 +29,4 @@ document.getElementById('logout-button').addEventListener('click', async functio
 document.getElementById('buy-button').addEventListener('click', function() {
     alert("구매 기능은 추후 구현해주세요!");
 });
+
