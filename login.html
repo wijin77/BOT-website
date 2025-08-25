@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-sm bg-white p-8 rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold mb-6 text-center">로그인</h1>
+        <form id="login-form" class="space-y-4">
+            <input type="email" id="email" placeholder="이메일" class="w-full p-3 border rounded-lg" required>
+            <input type="password" id="password" placeholder="비밀번호" class="w-full p-3 border rounded-lg" required>
+            <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600">이메일 로그인</button>
+        </form>
+        <div class="my-4 text-center">또는</div>
+        <button id="google-login" class="w-full bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 mb-2">구글 계정으로 로그인</button>
+        <p id="error-msg" class="text-red-500 mt-4 text-center hidden"></p>
+    </div>
+    <script type="module" src="login.js"></script>
+</body>
+</html>
