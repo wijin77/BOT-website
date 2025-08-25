@@ -1,22 +1,24 @@
-// 1. Firebase 서비스 모듈 가져오기
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// 2. Firebase 프로젝트 설정 (기존 값 그대로 사용)
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY", // 본인 값으로 채워진 상태 유지
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDORnc00mlGrymHB5PekOR1JkKmpggjzpM",
+  authDomain: "eunha-9e617.firebaseapp.com",
+  projectId: "eunha-9e617",
+  storageBucket: "eunha-9e617.firebasestorage.app",
+  messagingSenderId: "11922084914",
+  appId: "1:11922084914:web:c397d89cab25f24e4b982b",
+  measurementId: "G-QRLG97YGM6"
 };
 
-// 3. Firebase 앱 초기화
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const analytics = getAnalytics(app);
 
 // 4. 기능 실행
 document.addEventListener('DOMContentLoaded', () => {
@@ -74,3 +76,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
